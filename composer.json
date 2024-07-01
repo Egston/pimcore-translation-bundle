@@ -32,8 +32,9 @@
     "php": ">=7.4",
     "ext-intl": "*",
     "ext-json": "*",
-    "pimcore/pimcore": ">=5.5.0",
-    "guzzlehttp/guzzle": "^6.3 || ^7.0"
+    "pimcore/pimcore": ">=11",
+    "guzzlehttp/guzzle": "^6.3 || ^7.0",
+    "pimcore/admin-ui-classic-bundle": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5"

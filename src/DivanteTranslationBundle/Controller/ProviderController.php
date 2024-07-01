@@ -3,15 +3,18 @@
 namespace DivanteTranslationBundle\Controller;
 
 use DivanteTranslationBundle\Provider\ProviderFactory;
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
-use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+use Pimcore\Controller\Traits\JsonHelperTrait;
+use Pimcore\Controller\UserAwareController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin")
  */
-final class ProviderController extends AdminController
+final class ProviderController extends UserAwareController
 {
+    use JsonHelperTrait;
+
     private string $sourceLanguage;
     private string $provider;
 
@@ -26,7 +29,7 @@ final class ProviderController extends AdminController
      */
     public function translationProviderInfoAction(): JsonResponse
     {
-        return $this->adminJson([
+        return $this->jsonResponse([
             'provider' => $this->provider
         ]);
     }

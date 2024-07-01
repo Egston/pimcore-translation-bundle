@@ -31,7 +31,7 @@ pimcore.object.tags.wysiwyg = Class.create(pimcore.object.tags.wysiwyg, {
 
         if (this.context && this.context.language) {
             this.translateButton = new pimcore.object.elementservice.translateButton(
-                this.object.data.general.o_id,
+                this.object.data.general.id,
                 this.fieldConfig.name,
                 this,
                 'wysiwyg',

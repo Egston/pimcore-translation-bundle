@@ -9,9 +9,14 @@ declare(strict_types=1);
 namespace DivanteTranslationBundle;
 
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\PimcoreBundleAdminClassicInterface;
+use Pimcore\Extension\Bundle\Traits\BundleAdminClassicTrait;
 
-final class DivanteTranslationBundle extends AbstractPimcoreBundle
+final class DivanteTranslationBundle extends AbstractPimcoreBundle implements
+    PimcoreBundleAdminClassicInterface
 {
+    use BundleAdminClassicTrait;
+
     public function getJsPaths(): array
     {
         return [

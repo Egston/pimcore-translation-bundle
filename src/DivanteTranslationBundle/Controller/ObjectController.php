@@ -10,17 +10,20 @@ declare(strict_types=1);
 namespace DivanteTranslationBundle\Controller;
 
 use DivanteTranslationBundle\Provider\ProviderFactory;
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
-use Pimcore\Bundle\AdminBundle\HttpFoundation\JsonResponse;
+use Pimcore\Controller\Traits\JsonHelperTrait;
+use Pimcore\Controller\UserAwareController;
 use Pimcore\Model\DataObject;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/object")
  */
-final class ObjectController extends AdminController
+final class ObjectController extends UserAwareController
 {
+    use JsonHelperTrait;
+
     private string $sourceLanguage;
     private string $provider;
 
@@ -44,7 +47,7 @@ final class ObjectController extends AdminController
             $data = $object->$fieldName($lang) ?: $object->$fieldName($this->sourceLanguage);
 
             if (!$data) {
-                return $this->adminJson([
+                $this->jsonResponse([
                     'success' => false,
                     'message' => 'Data are empty',
                 ]);
@@ -58,13 +61,13 @@ final class ObjectController extends AdminController
             $data = strip_tags($data);
             $data = $provider->translate($data, $lang);
         } catch (\Throwable $exception) {
-            return $this->adminJson([
+            return $this->jsonResponse([
                 'success' => false,
                 'message' => $exception->getMessage()
             ]);
         }
 
-        return $this->adminJson([
+        return $this->jsonResponse([
             'success' => true,
             'data' => $data,
         ]);
