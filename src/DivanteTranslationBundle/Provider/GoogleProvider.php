@@ -14,6 +14,26 @@ class GoogleProvider extends AbstractProvider
 {
     protected string $url = 'https://www.googleapis.com/';
 
+    private function toGoogleTarget(string $locale): string
+    {
+        $lang = locale_get_primary_language($locale) ?: $locale;
+
+        if ($lang === 'zh') {
+            $region = strtoupper(locale_get_region($locale) ?? '');
+            $script = locale_get_script($locale) ?? '';
+
+            // Traditional if script says Hant OR region is traditionally-Hant
+            if (stripos($script, 'Hant') !== false || in_array($region, ['TW', 'HK', 'MO'], true)) {
+                return $region === 'HK' ? 'zh-HK' : 'zh-TW'; // optional nuance; zh-TW is usually fine
+            }
+
+            return 'zh-CN'; // default to Simplified if not clearly Traditional
+        }
+
+        // For most other languages, Google expects ISO 639-1 (sometimes BCP-47).
+        return $lang;
+    }
+
     public function translate(string $data, string $targetLanguage): string
     {
         try {
@@ -25,7 +45,7 @@ class GoogleProvider extends AbstractProvider
                         'key' => $this->apiKey,
                         'q' => $data,
                         'source' => '',
-                        'target' => locale_get_primary_language($targetLanguage),
+                        'target' => $this->toGoogleTarget($targetLanguage),
                     ]
                 ]
             );
