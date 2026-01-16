@@ -62,9 +62,6 @@ function handleTranslationRequest(id, fieldName, component, type, lang, formalit
 
             if (res.success) {
                 switch (type) {
-                    case 'wysiwyg':
-                        CKEDITOR.instances[component.editableDivId].setData(res.data);
-                        break;
                     case 'input':
                         component.setRawValue(res.data);
                         break;

@@ -9,7 +9,7 @@ Copy data from the source language and translate it by using:
 - Deepl (https://www.deepl.com/en/docs-api/)
 - Microsoft Translator (global region) (https://azure.microsoft.com/en-en/services/cognitive-services/translator/)
 
-Supports input, textarea and wysiwyg fields.
+Supports input and textarea fields.
 
 **Table of Contents**
 - [Pimcore Translation Bundle](#google-translate)
